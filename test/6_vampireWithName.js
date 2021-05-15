@@ -6,7 +6,7 @@ const Vampire = require('../vampire.js');
 describe("Vampire", function() {
 
   let rootVampire;
-  beforeEach( function() {
+  beforeEach(function() {
     rootVampire = new Vampire("root");
   });
 
@@ -35,19 +35,19 @@ describe("Vampire", function() {
 
     it("should be the root for root", () => {
       expect(rootVampire.vampireWithName('root')).to.equal(rootVampire);
-    })
+    });
 
     it("should be offspring8 for 'h'", () => {
       expect(rootVampire.vampireWithName('h')).to.equal(offspring8);
-    })
+    });
 
     it("should be offspring7 for 'g'", () => {
       expect(rootVampire.vampireWithName('g')).to.equal(offspring7);
-    })
+    });
 
     it("should be '' for ''", () => {
       expect(rootVampire.vampireWithName('')).to.equal(null);
-    })
+    });
     
   });
 });

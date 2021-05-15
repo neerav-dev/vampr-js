@@ -24,7 +24,7 @@ class Vampire {
     let numberOfVampire = 0;
     let currentVampire = this;
 
-    while(currentVampire.creator){
+    while (currentVampire.creator) {
       currentVampire = currentVampire.creator;
       numberOfVampire++;
     }
@@ -55,28 +55,62 @@ class Vampire {
       return vampire;
     } else if (this.numberOfVampiresFromOriginal > vampire.numberOfVampiresFromOriginal) {
       return vampire;
-    } else if (this.numberOfVampiresFromOriginal < vampire.numberOfVampiresFromOriginal){
+    } else if (this.numberOfVampiresFromOriginal < vampire.numberOfVampiresFromOriginal) {
       return this;
-    } else if (this.numberOfVampiresFromOriginal === vampire.numberOfVampiresFromOriginal) { 
+    } else if (this.numberOfVampiresFromOriginal === vampire.numberOfVampiresFromOriginal) {
       return this.creator;
     } else {
-      this.closestCommonAncestor(vampire);
+      return this.closestCommonAncestor(vampire);
     }
   }
 
   // Returns the vampire object with that name, or null if no vampire exists with that name
   vampireWithName(name) {
-    return name;
+    let vampire = null;
+
+    if (this.name === name) {
+      return this;
+    }
+
+    for (const vamp of this.offspring) {
+      if (!vampire) {
+        vampire = (vamp.vampireWithName(name));
+      }
+    }
+    
+    return vampire;
   }
 
   // Returns the total number of vampires that exist
   get totalDescendents() {
+    let totalDescendent = 0;
 
+    
+    for (const vamp of this.offspring) {
+      totalDescendent += 1;
+      
+      const offSpringTotalDescendent = vamp.totalDescendents;
+      
+      totalDescendent += offSpringTotalDescendent;
+    }
+
+    return totalDescendent;
   }
 
   // Returns an array of all the vampires that were converted after 1980
   get allMillennialVampires() {
+    let vampires = [];
 
+    if (this.yearConverted > 1980) {
+      vampires.push(this);
+    }
+
+    for (const vamp of this.offspring) {
+      const vamps = vamp.allMillennialVampires;
+      vampires = vampires.concat(vamps);
+    }
+
+    return vampires;
   }
 }
 
